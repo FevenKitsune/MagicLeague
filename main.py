@@ -12,14 +12,13 @@ import sqlite3
 import discord
 from fuzzywuzzy import process
 
-__author__ = "Rob Knight, Gavin Huttley, and Peter Maxwell"
-__copyright__ = "Copyright 2007, The Cogent Project"
-__credits__ = ["Rob Knight", "Peter Maxwell", "Gavin Huttley",
-                    "Matthew Wakefield"]
+__author__ = ""
+__copyright__ = ""
+__credits__ = [""]
 __license__ = "CC0"
 __version__ = "5.6.2022"
-__maintainer__ = "Rob Knight"
-__email__ = "rob@spot.colorado.edu"
+__maintainer__ = ""
+__email__ = ""
 __status__ = "Production"
 
 logging.basicConfig(level=logging.INFO)
