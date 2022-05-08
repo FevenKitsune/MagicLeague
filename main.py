@@ -1165,4 +1165,4 @@ async def on_message(message):
 
 
 # Run client.
-bot.run('')
+bot.run(os.environ['MAGICLEAGUE_TOKEN'])
