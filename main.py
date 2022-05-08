@@ -24,19 +24,66 @@ __status__ = "Production"
 
 logging.basicConfig(level=logging.INFO)
 
-client = commands.Bot(command_prefix="m^")
+bot = commands.Bot(command_prefix="m^")
 # TODO: Implement database lookup function.
 configDb = sqlite3.connect("/usr/src/db/config.db")
 configDb.text_factory = str
 
 
-@client.event
+@bot.group()
+async def config(ctx):
+    if ctx.invoked_subcommand is None:
+        await ctx.send("Error: Missing argument, please provide a configuration mode.")
+
+
+@config.group(name='add')
+async def _add(ctx, parameter: str, value: str):
+    return
+
+
+@config.group(name='remove')
+async def _remove(ctx, parameter: str, value: str):
+    return
+
+
+@config.group(name='clear')
+async def _clear(ctx, parameter: str):
+    return
+
+
+@config.group(name='list')
+async def _list(ctx):
+    return
+
+
+@bot.command()
+async def sign(ctx, user: commands.MemberConverter, team: commands.RoleConverter):
+    return
+
+
+@bot.command()
+async def release(ctx, user: commands.MemberConverter, team: commands.RoleConverter):
+    return
+
+
+@bot.command()
+async def promote(ctx, user: commands.MemberConverter, team: commands.RoleConverter,
+                  staff_role: commands.RoleConverter):
+    return
+
+
+@bot.command()
+async def demote(ctx, user: commands.MemberConverter, team: commands.RoleConverter):
+    return
+
+
+@bot.event
 async def on_ready():
     startup = logging.getLogger("startup")
     startup.info("===MagicLeague 2 is now starting up!===")
-    startup.info('USERNAME: {0.user}'.format(client))
-    startup.info('ID: {0.user.id}'.format(client))
-    startup.info("SERVERS: " + str(sum(1 for x in client.guilds)))
+    startup.info('USERNAME: {0.user}'.format(bot))
+    startup.info('ID: {0.user.id}'.format(bot))
+    startup.info("SERVERS: " + str(sum(1 for x in bot.guilds)))
 
     dbCheck = configDb.cursor()
     dbCheck.execute("SELECT count(*) FROM sqlite_master WHERE type='table' and name='config'")
@@ -335,9 +382,9 @@ async def cfgSet_TextSign(guild, text):
     cfgSet.close()
 
 
-@client.event
+@bot.event
 async def on_message(message):
-    if message.author == client.user:
+    if message.author == bot.user:
         return
 
     debug_log = logging.getLogger("debug")
@@ -717,7 +764,8 @@ async def on_message(message):
                                         try:
                                             await member_mentions[0].remove_roles(role)
                                         except discord.errors.Forbidden:
-                                            await message.channel.send("Unable to remove the free agent role! Please check your permissions.")
+                                            await message.channel.send(
+                                                "Unable to remove the free agent role! Please check your permissions.")
                                             return
 
                                 # Adds the mentioned role to the user.
@@ -727,7 +775,8 @@ async def on_message(message):
                                 try:
                                     await member_mentions[0].add_roles(found_role)
                                 except discord.errors.Forbidden:
-                                    await message.channel.send("Unable to add the tagged role! Please check your permissions. Restoring free agent roles.")
+                                    await message.channel.send(
+                                        "Unable to add the tagged role! Please check your permissions. Restoring free agent roles.")
                                     for roleID in free_agent:
                                         free_agent_role = discord.utils.find(lambda f: f.id == int(roleID),
                                                                              message.guild.roles)
@@ -840,7 +889,8 @@ async def on_message(message):
                                     try:
                                         await member_mentions[0].remove_roles(found_role)
                                     except discord.errors.Forbidden:
-                                        await message.channel.send("ERROR: Unable to remove tagged role from user, please check your permission settings!")
+                                        await message.channel.send(
+                                            "ERROR: Unable to remove tagged role from user, please check your permission settings!")
                                         return
 
                                     # Adds free agent role.
@@ -1087,7 +1137,7 @@ async def on_message(message):
                 await message.channel.send("Error: Demote Error: You do not have permission to do that.")
 
         elif command == "servers":
-            await message.channel.send("Currently connected to " + str(sum(1 for x in client.guilds)) + " servers.")
+            await message.channel.send("Currently connected to " + str(sum(1 for x in bot.guilds)) + " servers.")
 
         elif command == "invite":
             await message.channel.send(
@@ -1110,4 +1160,4 @@ async def on_message(message):
 
 
 # Run client.
-client.run('')
+bot.run('')
