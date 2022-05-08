@@ -2,16 +2,16 @@
 
 Moving legacy code to GitHub for future maintenance. Originally written in 2018.
 """
-
-print("Loading...")
-
 import logging
+import os
 import shlex
 import sqlite3
 
-from discord.ext import commands
 import discord
+from discord.ext import commands
 from fuzzywuzzy import process
+
+print("Loading...")
 
 __author__ = ""
 __copyright__ = ""
