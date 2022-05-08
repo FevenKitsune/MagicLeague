@@ -77,6 +77,11 @@ async def demote(ctx, user: commands.MemberConverter, team: commands.RoleConvert
     return
 
 
+@bot.command(name='help')
+async def bot_help(ctx):
+    return
+
+
 @bot.event
 async def on_ready():
     startup = logging.getLogger("startup")
