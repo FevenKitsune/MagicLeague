@@ -9,6 +9,7 @@ import logging
 import shlex
 import sqlite3
 
+from discord.ext import commands
 import discord
 from fuzzywuzzy import process
 
@@ -23,7 +24,8 @@ __status__ = "Production"
 
 logging.basicConfig(level=logging.INFO)
 
-client = discord.Client()
+client = commands.Bot(command_prefix="m^")
+# TODO: Implement database lookup function.
 configDb = sqlite3.connect("/usr/src/db/config.db")
 configDb.text_factory = str
 
